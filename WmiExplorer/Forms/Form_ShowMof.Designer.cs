@@ -30,6 +30,7 @@
         {
             this.textBoxShowMOF = new System.Windows.Forms.TextBox();
             this.buttonCloseMof = new System.Windows.Forms.Button();
+            this.buttonCopy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxShowMOF
@@ -61,6 +62,17 @@
             this.buttonCloseMof.UseVisualStyleBackColor = true;
             this.buttonCloseMof.Click += new System.EventHandler(this.buttonCloseMOF_Click);
             // 
+            // buttonCopy
+            // 
+            this.buttonCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCopy.Location = new System.Drawing.Point(12, 272);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(47, 27);
+            this.buttonCopy.TabIndex = 2;
+            this.buttonCopy.Text = "Copy";
+            this.buttonCopy.UseVisualStyleBackColor = true;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
+            // 
             // Form_ShowMof
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -68,6 +80,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCloseMof;
             this.ClientSize = new System.Drawing.Size(534, 311);
+            this.Controls.Add(this.buttonCopy);
             this.Controls.Add(this.buttonCloseMof);
             this.Controls.Add(this.textBoxShowMOF);
             this.Name = "Form_ShowMof";
@@ -85,5 +98,6 @@
 
         private System.Windows.Forms.TextBox textBoxShowMOF;
         private System.Windows.Forms.Button buttonCloseMof;
+        private System.Windows.Forms.Button buttonCopy;
     }
 }
