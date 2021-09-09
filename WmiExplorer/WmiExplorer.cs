@@ -748,13 +748,6 @@ namespace WmiExplorer
             mofForm.CenterForm(this).Show(this);
         }
 
-        private void contextMenuItemShowClassORMi_Click(object sender, EventArgs e)
-        {
-            var mof = ((WmiClass)listClasses.SelectedItems[0].Tag).GetClassORMi();
-            Form_ShowMof mofForm = new Form_ShowMof(mof, "ORMi class");
-            mofForm.CenterForm(this).Show(this);
-        }
-
         private void contextMenuItemShowInstanceMof_Click(object sender, EventArgs e)
         {
             Form_ShowMof mofForm = new Form_ShowMof(_instanceMof);
