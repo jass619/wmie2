@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WmiExplorer.Classes
@@ -174,6 +175,25 @@ namespace WmiExplorer.Classes
             Class.Options.UseAmendedQualifiers = bAmended;
             Class.Get();
             return Class.GetText(TextFormat.Mof).Replace("\n", "\r\n");
+        }
+
+        public string GetClassORMi()
+        {
+            Class.Get();
+
+            var classPath = Class.ClassPath;
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"[WMIClass(Name = \"{classPath.ClassName}\", Namespace = @\"{classPath.NamespacePath}\")]");
+            sb.AppendLine($"public class {classPath.ClassName.Replace("Win32_", string.Empty)} : WMIInstance");
+            sb.AppendLine("{");
+            foreach (var property in Class.Properties)
+            {
+                var type = ManagementBaseObjectW.GetTypeFor(property.Type, property.IsArray);
+                sb.AppendLine($"\tpublic {type} {property.Name} {{ get; set; }}");
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
         }
 
         public void ResetInstances()

@@ -371,6 +371,7 @@ namespace WmiExplorer
             {
                 if (listInstances.SelectedItems.Count != 0)
                 {
+                    contextMenu.Items.Add("Show ORMi class", null, contextMenuItemShowClassORMi_Click);
                     contextMenu.Items.Add("Show MOF", null, contextMenuItemShowInstanceMof_Click);
                     contextMenu.Items.Add("Copy MOF", null, contextMenuItemCopyInstanceMof_Click);
                     contextMenu.Items.Add("Copy Path", null, contextMenuItemCopyInstancePath_Click);
@@ -736,6 +737,13 @@ namespace WmiExplorer
         {
             var mof = ((WmiClass)listClasses.SelectedItems[0].Tag).GetClassMof(true);
             Form_ShowMof mofForm = new Form_ShowMof(mof);
+            mofForm.CenterForm(this).Show(this);
+        }
+
+        private void contextMenuItemShowClassORMi_Click(object sender, EventArgs e)
+        {
+            var mof = ((WmiClass)listClasses.SelectedItems[0].Tag).GetClassORMi();
+            Form_ShowMof mofForm = new Form_ShowMof(mof, "ORMi class");
             mofForm.CenterForm(this).Show(this);
         }
 
