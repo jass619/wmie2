@@ -32,6 +32,7 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 * Caching enumerated classes/instances.
 * View WMI Provider Process Information.
 * Automatic check for new version.
+* Export WMI class in a format that can be used by [ORMi](https://www.nuget.org/packages/ORMi)
 
 # Known Issues
 
