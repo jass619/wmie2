@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WmiExplorer.Classes
@@ -174,6 +175,50 @@ namespace WmiExplorer.Classes
             Class.Options.UseAmendedQualifiers = bAmended;
             Class.Get();
             return Class.GetText(TextFormat.Mof).Replace("\n", "\r\n");
+        }
+
+        public string GetClassORMi()
+        {
+            Class.Get();
+
+            var classPath = Class.ClassPath;
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"[WMIClass(Name = \"{classPath.ClassName}\", Namespace = @\"{classPath.NamespacePath}\")]");
+            sb.AppendLine($"public class {classPath.ClassName.Replace("Win32_", string.Empty)} : WMIInstance");
+            sb.AppendLine("{");
+            foreach (var property in Class.Properties)
+            {
+                var type = ManagementBaseObjectW.GetTypeFor(property.Type, false);
+                sb.AppendLine($"\tpublic {ConvertType(type, property.IsArray)} {property.Name} {{ get; set; }}");
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        private static readonly IDictionary<string, string> TypeKeywords = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "System.Object", "object" },
+            { "System.String", "string" },
+            { "System.Boolean", "bool" },
+            { "System.UInt16", "ushort" },
+            { "System.UInt32", "uint" },
+            { "System.UInt64", "ulong" },
+            { "System.Int16", "short" },
+            { "System.Int32", "int" },
+            { "System.Int64", "long" },
+            { "System.Single", "float"},
+            { "System.Double", "double"},
+            { "System.Decimal", "decimal"},
+            { "System.Byte", "byte"},
+            { "System.Char", "char"}
+        };
+
+        private static string ConvertType(Type type, bool isArray)
+        {
+            var result = type.ToString(); 
+            return (TypeKeywords.TryGetValue(result, out var keyword) ? keyword : result.Replace("System.", string.Empty)) 
+                    + (isArray ? "[]" : string.Empty);
         }
 
         public void ResetInstances()

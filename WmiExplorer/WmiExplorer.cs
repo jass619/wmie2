@@ -354,6 +354,7 @@ namespace WmiExplorer
                         contextMenu.Items.Add("&Cancel Enumeration", null, contextMenuItemCancelEnumClass_Click);
                     }
 
+                    contextMenu.Items.Add("Show ORMi class", null, contextMenuItemShowClassORMi_Click);
                     contextMenu.Items.Add("Show MOF", null, contextMenuItemShowClassMof_Click);
                     contextMenu.Items.Add("Show MOF (Amended Qualifiers)", null, contextMenuItemShowClassMofAmended_Click);
                     contextMenu.Items.Add("Copy MOF", null, contextMenuItemCopyClassMof_Click);
@@ -723,6 +724,13 @@ namespace WmiExplorer
             }
             Log(nodeToRemove + " Removed");
             treeNamespaces.SelectedNode.Remove();
+        }
+
+        private void contextMenuItemShowClassORMi_Click(object sender, EventArgs e)
+        {
+            var mof = ((WmiClass)listClasses.SelectedItems[0].Tag).GetClassORMi();
+            Form_ShowMof mofForm = new Form_ShowMof(mof, "ORMi class");
+            mofForm.CenterForm(this).Show(this);
         }
 
         private void contextMenuItemShowClassMof_Click(object sender, EventArgs e)
