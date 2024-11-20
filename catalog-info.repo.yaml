@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: wmie2
+  description: ''
+  annotations:
+    github.com/project-slug: Lansweeper/wmie2
+spec:
+  type: github-repository
+  owner: unknown
+  lifecycle: stable
